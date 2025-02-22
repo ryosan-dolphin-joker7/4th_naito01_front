@@ -38,7 +38,9 @@ jobs:
           if [ -d ".next/static/" ]; then cp -r ./.next/static/. ./deploy/.next/static; fi  # 静的ファイルをコピー
 
       - name: Zip artifact for deployment
-        run: zip -r release.zip ./deploy
+        run: |
+          cd deploy
+          zip -r ../release.zip .
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
