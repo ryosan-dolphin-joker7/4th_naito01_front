@@ -32,12 +32,10 @@ jobs:
 
       - name: Prepare artifact for deployment
         run: |
-          mkdir -p deploy
-          cp -r .next/standalone/. deploy/
-          cp -r .next/static/. deploy/.next/static/
-          cp -r public deploy/
-          cp package.json deploy/
-          cp package-lock.json deploy/
+          mkdir deploy  # デプロイ用のディレクトリを作成
+          if [ -d ".next/standalone/" ]; then cp -r ./.next/standalone/. ./deploy; fi  # Next.jsのスタンドアロンファイルをコピー
+          if [ -d "./public" ]; then cp -r ./public ./deploy; fi  # 公開フォルダをコピー
+          if [ -d ".next/static/" ]; then cp -r ./.next/static/. ./deploy/.next/static; fi  # 静的ファイルをコピー
 
       - name: Zip artifact for deployment
         run: zip -r release.zip ./deploy
